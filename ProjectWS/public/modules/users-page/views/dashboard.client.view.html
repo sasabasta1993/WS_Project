@@ -1,0 +1,387 @@
+<section data-ng-controller="DashboardController">
+	<br><br><br>
+
+
+
+<div ng-show="currentOperation ==='Nothing'"  class="container-fluid">  
+
+<!--<pre>Pregled projekata</pre>-->
+<form class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+<legend></legend>
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="selectbasic">Kriterijum za prikaza:</label>
+  <div class="col-md-4">
+    <select id="selectbasic" name="selectbasic" class="form-control" ng-model="kriterijumZaPrikaz"  ng-change="updateView()">
+      <option value="1" >Zadaci dodeljeni meni</option>
+      <option value="2">Zadaci koje sam kreirao</option>
+    </select>
+  </div>
+</div>
+
+</fieldset>
+</form>
+       <br><br>  
+       
+       <table class="table table-striped">  
+         <thead>  
+           <tr>    
+             <th>  
+               <a href="" ng-click="order('name')">Naziv zadatka</a>  
+             </th>
+             <th>  
+               <a href="" ng-click="order('createdByUser')">Kreirao</a>  
+             </th>
+             <th>  
+               <a href="" ng-click="order('createdForUser')">Dodeljeno</a>  
+             </th>
+             <th>  
+               <a href="" ng-click="order('priority')">Prioritet</a>  
+             </th>
+             <th>  
+               <a href="" ng-click="">Status</a>  
+             </th>
+             <!--<th><a href="" ng-click="order('age')"> Korisnici na projektu</a> </th>-->  
+             <th>Akcije</th>
+             <th></th> 
+             <th></th>
+             <th></th> 
+           </tr>  
+         </thead>  
+         <tbody>
+
+           <tr>  
+             
+             <td> <input type="text" ng-model="search.name" /></td>  
+             <td> <input type="text" ng-model="search.createdByUser" /></td> 
+             <td> <input type="text" ng-model="search.createdForUser" /></td> 
+             <td> <input type="text" ng-model="search.priority" /></td>
+             <td> <input type="text" ng-model="search.status"/></td>
+             
+             <td></td>
+             <td></td>
+             <td></td>
+             <td></td>
+              
+           </tr> 
+
+           <tr data-ng-repeat="task in projectTasks| orderBy:predicate:reverse | filter:paginate| filter:search track by (task.id) " >  
+ 			 
+
+
+             <td>{{task.name}}</td>
+             <td>{{task.createdByUser}}</td>
+             <td>{{task.createdForUser}}</td>
+             <td>{{task.priority}}</td>
+             <td>{{task.status}}</td>
+            
+             
+             <!-- 
+             <td>
+                 <select id="" name="" class="form-control" ng-model="selectedUser">
+    					<option ng-repeat="option in teamUsers" value="{{option._id}}&{{option.displayName}}">			{{option.displayName}}</option>
+    			</select>	
+
+             </td>-->
+             
+
+            
+             <td>  
+               <button ng-click="changeTask(task);"   class="btn">  
+                 Izmena  
+               </button>
+               </td>
+               <td>
+                <button ng-click="removeTask(task);"   class="btn">  
+                 Brisanje  
+               </button>
+
+             </td>   
+             <td>
+             	
+             	<button ng-click="createComment(task);" class="btn">
+             		Dodaj kom.
+             	</button>
+             </td>
+             <td>
+             	<button ng-click="viewComments(task);" class="btn">
+             		Komentari
+             	</button>
+             </td>
+           </tr>  
+         </tbody>  
+       </table>  
+       <pagination total-items="totalItems" ng-model="currentPage"  
+             max-size="5" boundary-links="true"  
+             items-per-page="numPerPage" class="pagination-sm">  
+       </pagination>  
+
+       {{errorMessageDelete}}
+     </div> 
+
+<br><br>
+<div ng-show="currentOperation==='IzmenaOp'">
+<form class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="">Naslov zadatka:</label>  
+  <div class="col-md-6">
+  <input readonly id="" name="" data-ng-model="taskP.name" type="text"  class="form-control input-md" required="">
+    
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="">Opis zadatka:</label>
+  <div class="col-md-6">                     
+    <textarea readonly data-ng-model="taskP.description" class="form-control" id="" name=""></textarea>
+  </div>
+</div>
+
+
+
+<!-- Select Basic 
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="">Dodeljeno:</label>
+  <div class="col-md-3">
+    <select id="" name="" class="form-control" data-ng-model='selectedUser'>
+    <option value="d&d" selected="true">Nije dodeljeno</option>
+	<option ng-repeat="option in availableUsers" value="{{option._id}}&{{option.displayName}}">{{option.displayName}}</option>
+    </select>
+  </div>
+</div>
+-->
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="">Dodeljeno:</label>  
+  <div class="col-md-6">
+  <input readonly id="" name="" data-ng-model="taskP.createdForUser" type="text"  class="form-control input-md" >
+    
+  </div>
+</div>
+
+<!-- Select Basic 
+<div class="form-group">
+  <label class="col-md-4 control-label" for="">Prioritet:</label>
+  <div class="col-md-3">
+    <select id="" name="" class="form-control" data-ng-model="selectedPriority">
+      <option value="Blocker" selected="true">Blocker</option>
+      <option value="Critical">Critical</option>
+      <option value="Major">Major</option>
+      <option value="Minor">Minor</option>
+      <option value="Trivial">Trivial</option>
+    </select>
+  </div>
+</div>
+-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="">Prioritet:</label>  
+  <div class="col-md-6">
+  <input readonly id="" name="" data-ng-model="taskP.priority" type="text"  class="form-control input-md" >
+    
+  </div>
+</div>
+
+
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="">Status:</label>
+  <div class="col-md-3">
+    <select id="" name="" class="form-control" data-ng-model="taskP.status">
+      <option value="To Do" selected="true">To Do</option>
+      <option value="In Progress">In Progress</option>
+      <option value="Verify">Verify</option>
+      <option value="Done">Done</option>
+      
+    </select>
+  </div>
+</div>
+
+<!-- Button (Double) -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for=""></label>
+  <div class="col-md-8">
+    <button id="" name="" ng-click="izlaz();" class="btn btn-warning">Izlaz</button>
+    <button id="" name="" ng-click="potvrda();" class="btn btn-success">Potvrda</button>
+    <br><br>
+    {{errorMessage}}
+  </div>
+
+</div>
+
+</fieldset>
+</form>
+</div>
+
+
+<!-- Dodavanje komentara -->
+<div  ng-show="currentOperation ==='createComment'">
+
+
+<form class="form-horizontal">
+<fieldset>
+
+
+
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Komentar:">Komentar:</label>
+  <div class="col-md-8">                     
+    <textarea  data-ng-model="comment.text" class="form-control" id="Komentar:" name="Komentar:"></textarea>
+  </div>
+</div>
+
+<!-- Button (Double) -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for=""></label>
+  <div class="col-md-8">
+    <button id="" name="" ng-click="izlaz();" class="btn btn-warning">Izlaz</button>
+    <button id="" name="" ng-click="potvrdaKomentar();" class="btn btn-success">Potvrda</button>
+      <br><br>
+		{{errorMessageCreateComment}}
+  </div>
+
+</div>
+
+</fieldset>
+</form>	
+
+
+<br><br><br><br>
+</div>
+
+
+<div ng-show="currentOperation ==='viewComments'" >
+
+
+<div class="container-fluid">  
+       <!--<pre>Pregled projekata</pre>-->  
+       
+       <table class="table table-striped">  
+         <thead>  
+           <tr>    
+             <th>  
+               <a href="" ng-click="">Kreirao</a>  
+             </th>
+             <th>  
+               <a href="" ng-click="">Sadrzaj</a>  
+             </th>
+
+             <th>  
+               <a href="" ng-click="">Datum kreiranja</a>  
+             </th>
+  
+
+     
+           </tr>  
+         </thead>  
+         <tbody>
+
+           <tr>  
+             
+
+             <td> <input type="text"  /></td>  
+             <td> <input type="text"  /></td> 
+             <td> <input type="text"  /></td> 
+           </tr> 
+
+           <tr ng-click="showComment(comment);" data-ng-repeat="comment in taskComments">  
+ 			 
+
+
+             <td>{{comment.authorName}}</td>
+             <td>{{comment.text}}</td>
+             <td>{{comment.date}}</td>
+
+                          
+             <!-- 
+             <td>
+                 <select id="" name="" class="form-control" ng-model="selectedUser">
+    					<option ng-repeat="option in teamUsers" value="{{option._id}}&{{option.displayName}}">			{{option.displayName}}</option>
+    			</select>	
+
+             </td>-->
+                
+           </tr>  
+         </tbody>  
+       </table>
+
+       
+       <pagination total-items="totalItems" ng-model="currentPage"  
+             max-size="5" boundary-links="true"  
+             items-per-page="numPerPage" class="pagination-sm">  
+       </pagination>  
+		
+
+       {{errorMessageDeleteComment}}
+     </div> 
+
+
+<!------------------------------------------------------forma------------------------------>
+
+<br><br><br>
+<form class="form-horizontal">
+<fieldset>
+
+
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="">Kreirao:</label>  
+  <div class="col-md-4">
+  <input id="" name="" data-ng-model="tableComment.authorName" type="text" placeholder="" class="form-control input-md" readonly="">
+    
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-md-4 control-label" for="">Datum kreiranja:</label>  
+  <div class="col-md-4">
+  <input id="" name="" data-ng-model="tableComment.date" type="text" placeholder="" class="form-control input-md" readonly="">
+    
+  </div>
+</div>
+
+<!-- Textarea -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="Komentar:">Komentar:</label>
+  <div class="col-md-8">                     
+    <textarea class="form-control" data-ng-model="tableComment.text" id="Komentar:" name="Komentar:"></textarea>
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for=""></label>
+  <div class="col-md-4">
+    <button id="" name="" ng-click="removeComment();" class="btn btn-success">Brisanje</button>
+  
+
+&nbsp 
+ 
+    <button id="" name="" ng-click="updateComment();" class="btn btn-success">Izmena</button>
+&nbsp
+    <button id="" name="" ng-click="nazad();" class="btn btn-success">Nazad</button>
+    <br>
+    {{errorMessageCommentOperation}}
+  </div>
+</div>
+
+</fieldset>
+</form>
+</div>
+
+
+</section>

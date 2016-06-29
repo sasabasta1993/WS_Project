@@ -1,0 +1,138 @@
+<section data-ng-controller="PregledProjekataController">
+<br><br><br>
+
+<div class="container-fluid">  
+       <!--<pre>Pregled projekata</pre>-->  
+       
+       <table class="table table-striped">  
+         <thead>  
+           <tr>    
+             <th>  
+               <a href="" ng-click="order('name')">Naziv projekta</a>  
+             </th>  
+             <!--<th><a href="" ng-click="order('age')"> Korisnici na projektu</a> </th>-->  
+             <th>Izmena</th>  
+           </tr>  
+         </thead>  
+         <tbody>
+
+           <tr>  
+             
+             <td> <input type="text" ng-model="search.name" /></td>  
+              
+             <td></td>
+              
+           </tr>  
+           <tr ng-repeat="project in projects | orderBy:predicate:reverse | filter:paginate| filter:search">  
+ 				
+             <td>{{ project.name}}</td>
+
+
+             <!--  
+             <td>
+                 <select id="" name="" class="form-control" ng-model="selectedUser">
+    					<option ng-repeat="option in teamUsers" value="{{option._id}}&{{option.displayName}}">			{{option.displayName}}</option>
+    			</select>	
+
+             </td>-->
+
+            
+
+             <td>  
+               <button ng-click="izmeniKorisnike(project);"  class="btn">  
+                 Korisnici  
+               </button>  
+             </td>   
+           </tr>  
+         </tbody>  
+       </table>  
+       <pagination total-items="totalItems" ng-model="currentPage"  
+             max-size="5" boundary-links="true"  
+             items-per-page="numPerPage" class="pagination-sm">  
+       </pagination>  
+     </div>  
+
+     <br><br><br>
+
+
+<div ng-show="operation === 'changeUsers'">
+<form class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="selectbasic">Izabrani korisnici:</label>
+  <div class="col-md-4">
+  	<!--
+    <select id="selectbasic" name="selectbasic" class="form-control">
+      <option value="1">Option one</option>
+      <option value="2">Option two</option>
+    </select>
+	-->
+
+	<select id="" name="" class="form-control" ng-model="selectedUser1">
+	<option value="default" selected="true">--</option>
+    <option ng-repeat="option in selectedUsers" value="{{option._id}}&{{option.displayName}}">			{{option.displayName}}</option>
+    </select>
+
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for=""></label>
+  <div class="col-md-4">
+    <button id="" name="" ng-click="removeUser();" class="btn btn-primary">Brisanje korisnika</button>
+    <br>
+    {{errorMessage1}}
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="selectbasic">Dodavanje korisnika:</label>
+  <div class="col-md-4">
+  	<!--
+    <select id="selectbasic" name="selectbasic" class="form-control">
+      <option value="1">Option one</option>
+      <option value="2">Option two</option>
+    </select>
+    -->
+
+    <select id="" name="" class="form-control" ng-model="selectedUser2">
+    <option value="default" selected="true">--</option>
+    <option ng-repeat="option in availableUsers" value="{{option._id}}&{{option.displayName}}">			{{option.displayName}}</option>
+    </select>
+
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for=""></label>
+  <div class="col-md-4">
+    <button id="" ng-click="addUser();" name="" class="btn btn-primary">Dodavanje korisnika</button>
+    <br>
+    {{errorMessage2}}
+  </div>
+</div>
+
+<!-- Button (Double) -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for=""></label>
+  <div class="col-md-8">
+    <button id="" name="" ng-click="izlaz();" class="btn btn-warning">Izlaz</button>
+    <button ng-click="potvrda();" id="" name="" class="btn btn-success">Potvrda</button>
+    <br>
+    {{errorMessage}}
+  </div>
+    
+</div>
+
+</fieldset>
+</form>
+</div>
+<br><br><br><br>
+</section>

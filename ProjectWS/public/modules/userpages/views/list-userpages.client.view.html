@@ -1,0 +1,19 @@
+<section data-ng-controller="UserpagesController" data-ng-init="find()">
+    <div class="page-header">
+        <h1>Userpages</h1>
+    </div>
+    <div class="list-group">
+        <a data-ng-repeat="userpage in userpages" data-ng-href="#!/userpages/{{userpage._id}}" class="list-group-item">
+			<small class="list-group-item-text">
+				Posted on
+				<span data-ng-bind="userpage.created | date:'medium'"></span>
+				by
+				<span data-ng-bind="userpage.user.displayName"></span>
+			</small>
+			<h4 class="list-group-item-heading" data-ng-bind="userpage.name"></h4>
+        </a>
+    </div>
+    <div class="alert alert-warning text-center" data-ng-hide="!userpages.$resolved || userpages.length">
+    	No Userpages yet, why don't you <a href="/#!/userpages/create">create one</a>?
+    </div>
+</section>

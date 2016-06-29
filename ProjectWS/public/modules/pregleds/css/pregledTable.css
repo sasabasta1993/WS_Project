@@ -1,0 +1,13 @@
+     .odd {  
+       background-color: antiquewhite;  
+       color: #008b8b;  
+     }  
+     td th {  
+       height: 30px;  
+       min-width: 100px;  
+     }  
+     thead {  
+       background-color: darkgray;  
+       color: white;  
+       height: 30px;  
+     }  

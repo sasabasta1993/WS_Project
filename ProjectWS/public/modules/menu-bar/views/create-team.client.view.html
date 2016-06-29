@@ -1,0 +1,76 @@
+<section data-ng-controller="CreateTeamController">
+<br><br><br>
+	<form class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="">Naziv tima:</label>  
+  <div class="col-md-5">
+  <input id="" name="" type="text" placeholder="naziv tima" class="form-control input-md" required=""  data-ng-model="team.name">
+    
+  </div>
+</div>
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="">Korisnici:</label>
+  <div class="col-md-4">
+    <select id="" name="" class="form-control" ng-model="selectedUser1">
+     <option value="default" selected="true">--</option>
+     <option ng-repeat="option in availableUsers" value="{{option._id}}&{{option.displayName}}">{{option.displayName}}</option>
+    </select>
+  </div>
+</div>
+
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for=""></label>
+  <div class="col-md-4">
+    <button ng-click="addUser();" id="" name="" class="btn btn-primary">Dodaj u tim</button>
+    <br>
+    {{errorMessage1}}
+  </div>
+</div>
+<br><br>
+
+<!-- Select Basic -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="">Dodani u tim:</label>
+  <div class="col-md-4">
+    <select id="" name="" class="form-control" ng-model="selectedUser2">
+     <option value="default" selected="true">--</option>
+     <option ng-repeat="option in selectedUsers" value="{{option._id}}&{{option.displayName}}">{{option.displayName}}</option>
+    </select>
+  </div>
+</div>
+<!-- Button -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for=""></label>
+  <div class="col-md-4">
+    <button ng-click="removeUser();" id="" name="" class="btn btn-primary">Izbaci </button>
+    <br>
+    {{errorMessage2}}
+  </div>
+</div>
+<br><br>
+<!-- Button (Double) -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for=""></label>
+  <div class="col-md-8">
+
+    <button ng-click="redirect('/');" id="" name="" class="btn btn-warning">Izlaz</button>
+    <button ng-click="createTeam();" id="" name="" class="btn btn-success">Potvrda</button>
+      <br><br>
+  	{{errorMessage}}
+  </div>
+
+</div>
+
+</fieldset>
+</form>
+
+</section>

@@ -1,0 +1,69 @@
+<section data-ng-controller="CreateProjectController"  >
+<form class="form-horizontal">
+<fieldset>
+
+<!-- Form Name -->
+<legend></legend>
+
+<!-- Text input-->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="">Project name:</label>  
+  <div class="col-md-5">
+  <input id="" name="projectName" data-ng-model="project.name" type="text" placeholder="project name" class="form-control input-md" required="">
+    
+  </div>
+</div>
+
+<!-- Select Multiple -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="">Registrovani clanovi:</label>
+  <div class="col-md-4">
+  <!--
+    <select id="" name="" class="form-control" multiple="multiple">
+      <option value="1">User1</option>
+      <option value="2">User2</option>
+    </select>
+	-->
+    <select name="" id="" class="form-control"  ng-model="selectedUser1">
+      <option value="default" selected="true">--</option>
+      <option ng-repeat="option in availableUsers" value="{{option._id}}&{{option.displayName}}">{{option.displayName}}</option>
+    </select>
+    <br>
+    <button id="" name="" ng-click="addUser();" class="btn btn-primary">Dodavanje clana</button>
+    <br>
+    {{errorMessage1}}
+  </div>
+</div>
+
+<br><br>
+<!-- Select Multiple -->
+<div class="form-group">
+  <label class="col-md-4 control-label" for="">Dodani za projekat:</label>
+  <div class="col-md-4">
+    <select id="" name="" class="form-control" ng-model="selectedUser2">
+      <option value="default" selected="true">--</option>
+     <option ng-repeat="option in selectedUsers" value="{{option._id}}&{{option.displayName}}">{{option.displayName}}</option>
+    </select>
+    <br>
+    <button id="" name="" ng-click="removeUser();" class="btn btn-primary">Brisanje clana</button>
+    <br>
+    {{errorMessage2}}
+  </div>
+</div>
+
+<!-- Button (Double) -->
+<br><br><br>
+<div class="form-group">
+  <label class="col-md-4 control-label" for=""></label>
+  <div class="col-md-8">
+    <button id="" name="" ng-click="redirect('/');" class="btn btn-warning">Izlaz</button>
+    <button id="" name="" ng-click="createProject();" class="btn btn-success">Potvrda</button>
+    <br>{{errorMessage}}
+  </div>
+</div>
+
+</fieldset>
+</form>
+
+
+</section>
