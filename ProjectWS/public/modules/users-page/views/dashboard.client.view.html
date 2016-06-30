@@ -14,7 +14,7 @@
 
 <!-- Select Basic -->
 <div class="form-group">
-  <label class="col-md-4 control-label" for="selectbasic">Kriterijum za prikaza:</label>
+  <label class="col-md-4 control-label" for="selectbasic">Prikaz:</label>
   <div class="col-md-4">
     <select id="selectbasic" name="selectbasic" class="form-control" ng-model="kriterijumZaPrikaz"  ng-change="updateView()">
       <option value="1" >Zadaci dodeljeni meni</option>
@@ -69,13 +69,13 @@
               
            </tr> 
 
-           <tr data-ng-repeat="task in projectTasks| orderBy:predicate:reverse | filter:paginate| filter:search track by (task.id) " >  
+           <tr data-ng-repeat="task in projectTasks| orderBy:predicate:reverse | filter:paginate| filter:search track by (task._id) " >  
  			 
 
 
              <td>{{task.name}}</td>
-             <td>{{task.createdByUser}}</td>
-             <td>{{task.createdForUser}}</td>
+             <td>{{task.kreiraoName}}</td>
+             <td>{{task.kreiranoZaName}}</td>
              <td>{{task.priority}}</td>
              <td>{{task.status}}</td>
             
@@ -96,7 +96,7 @@
                </button>
                </td>
                <td>
-                <button ng-click="removeTask(task);"   class="btn">  
+                <button ng-hide="kriterijumZaPrikaz === '1'" ng-click="removeTask(task);"   class="btn">  
                  Brisanje  
                </button>
 
@@ -166,7 +166,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="">Dodeljeno:</label>  
   <div class="col-md-6">
-  <input readonly id="" name="" data-ng-model="taskP.createdForUser" type="text"  class="form-control input-md" >
+  <input readonly id="" name="" data-ng-model="taskP.kreiraoName" type="text"  class="form-control input-md" >
     
   </div>
 </div>

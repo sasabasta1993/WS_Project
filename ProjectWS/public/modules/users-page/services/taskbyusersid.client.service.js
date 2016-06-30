@@ -6,7 +6,7 @@ angular.module('users-page').factory('Taskbyusersid', ['$resource',
 		// ...
 
 		// Public API
-		return $resource('task/:userId', {},
+		return $resource('/task/user/:userId', { userId :'@userId'},
 		{
 			update:{
 				method: 'PUT'

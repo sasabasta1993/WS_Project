@@ -6,7 +6,7 @@ angular.module('task').factory('TaskOp', ['$resource',
 		// ...
 
 		// Public API
-		return $resource('task/:taskId', { taskId: '@_id'},
+		return $resource('/task/:taskId', {taskId : '@taskId'},
 		{
 			update:{
 				method: 'PUT'

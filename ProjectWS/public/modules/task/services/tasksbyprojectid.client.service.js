@@ -7,7 +7,7 @@ angular.module('task').factory('Tasksbyprojectid', ['$resource',
 
 		// Public API
 	
-		return $resource('task/:projectId', { projectId: '@taskForProject'},
+		return $resource('task/project/:projectId', { projectId: '@projectId'},
 		{
 			update:{
 				method: 'PUT'

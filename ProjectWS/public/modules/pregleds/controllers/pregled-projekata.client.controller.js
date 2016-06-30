@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('pregleds').controller('PregledProjekataController', ['$scope','$timeout','ProjectOp','TeamOp','UsersOp','Availableusers','Authentication',
-	function($scope,$timeout,ProjectOp,TeamOp,UsersOp,Availableusers,Authentication) {
+angular.module('pregleds').controller('PregledProjekataController', ['$scope','$timeout','ProjectOp','TeamOp','UsersOp','Availableusers','Authentication','Usersbyprojectid',
+	function($scope,$timeout,ProjectOp,TeamOp,UsersOp,Availableusers,Authentication,Usersbyprojectid) {
 
 		
 	// Controller Logic
@@ -42,7 +42,10 @@ angular.module('pregleds').controller('PregledProjekataController', ['$scope','$
 
 		});
 
-		var team=TeamOp.get({teamId:currentUser.myTeamId},function(){
+
+		if(currentUser)
+			if(currentUser.myTeamId.length > 0)
+		var team=TeamOp.get({teamId:currentUser.myTeamId[0]},function(){
 
 			teamUsersId=team.members;
 
@@ -80,24 +83,26 @@ $scope.izmeniKorisnike=function(param){
 
 				projectMembers=currentProject.projectUsers;
 
+				$scope.selectedUsers=Usersbyprojectid.query({projectId : currentProject._id});
+
+				/*
 				allUsers1=UsersOp.query({},function(){
 
 				for(var j=0;j<allUsers1.length;j++){
 					for(var n=0;n<projectMembers.length;n++)
 					{
-						console.log(allUsers1[j]._id+' equals '+projectMembers[n]._id);
+						//console.log(allUsers1[j]._id+' equals '+projectMembers[n]._id);
+						if(allUsers1[j] && projectMembers[n])
 						if(allUsers1[j]._id === projectMembers[n]._id)
 						{
 							$scope.selectedUsers.push(allUsers1[j]);
 						}
 					}	
-				}	
+				}
+				
 
 			});
-			    
-
-
-
+			    */
 		};
 
 
@@ -227,12 +232,16 @@ $scope.izmeniKorisnike=function(param){
 			
 			for(var i=0;i<projectUsers.length;i++)
 			{
+
 				for(var j=0;j<removedUsers.length;j++)
-				if(projectUsers[i]._id === removedUsers[j])
 				{
-					updateUser({_id :projectUsers[i]._id,
-								$unset:{relatedProject: '' }});
-					delete projectUsers[i];
+					if(projectUsers[i])
+					if(projectUsers[i]._id === removedUsers[j])
+					{
+						updateUser({_id :projectUsers[i]._id,
+									$unset:{relatedProject: '' }});
+						delete projectUsers[i];
+					}
 				}
 
 			}
@@ -240,10 +249,13 @@ $scope.izmeniKorisnike=function(param){
 
 				for(i=0;i<addedUsers.length;i++){
 
+					if(projectUsers[i])
+					{
 					updateUser({_id : projectUsers[i]._id,
 								relatedProject : currentProject._id});
 
 					projectUsers.push({_id:addedUsers[i]});
+					}
 				}
 
 				currentProject.projectUsers=projectUsers;
@@ -260,15 +272,16 @@ $scope.izmeniKorisnike=function(param){
 
 				$scope.errorMessage='Korisnici za projekat uspesno izmenjeni.';
 
-				$scope.operation='nothing';
+				
 
 				$timeout(function(){
     			 $scope.errorMessage = '';
+    			 $scope.operation='nothing';
        			},1500);
 					
 					
 				}, function(response) {
-					$scope.errorMessage = response.data.message;
+					$scope.errorMessage = 'Greska.';
 				});
 
 

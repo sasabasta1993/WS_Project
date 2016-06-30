@@ -16,6 +16,8 @@ module.exports = function(app) {
 	app.route('/users/:userId').put(users.update);
 	app.route('/users/accounts').delete(users.removeOAuthProvider);
 
+	app.route('/users/:projectId').get(users.listUsersForProjectId);
+
 	// Setting up the users password api
 	app.route('/users/password').post(users.changePassword);
 	app.route('/auth/forgot').post(users.forgot);

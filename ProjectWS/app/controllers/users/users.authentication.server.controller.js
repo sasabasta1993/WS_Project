@@ -36,6 +36,22 @@ exports.list=function(req,res){
 };
 
 
+exports.listUsersForProjectId=function(req,res)
+{
+	User.find({relatedProject : req.params.projectId}).exec(function(err,users){
+
+		if(err){
+			return res.status(400).send({
+				message : err
+			});
+		}
+		else
+		{
+			res.json(users);
+		}
+	});
+};
+
 exports.listAvailableUsers=function(req,res){
 		console.log('usao sam u list function');
 	

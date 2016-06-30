@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users-page').controller('DashboardController', ['$scope','$timeout','Authentication','Tasksbyauthorsid','Tasksbyprojectid','TaskOp','CommentsView','Taskbyusersid',
-	function($scope,$timeout,Authentication,Tasksbyprojectid,TaskOp,CommentsView,Taskbyusersid,Tasksbyauthorsid) {
+angular.module('users-page').controller('DashboardController', ['$scope','$timeout','Authentication','Tasksbyauthorsid','TaskOp','Tasksbyprojectid','Taskbyusersid','CommentsView',
+	function($scope,$timeout,Authentication,Tasksbyauthorsid,TaskOp,Tasksbyprojectid,Taskbyusersid,CommentsView) {
 		// Controller Logic
 		// ...
 
@@ -40,27 +40,39 @@ angular.module('users-page').controller('DashboardController', ['$scope','$timeo
         $scope.reverse = true;  
         $scope.currentPage = 1;
 
+
+
         $scope.updateView=function(){
 
-
+        	console.log('updateTesk');
 	        switch($scope.kriterijumZaPrikaz) {
-	    	case 1:
+	    	case '1':
 	    		console.log(currentUser.displayName);
+	    		console.log('izmena selekcije 1'+ currentUser._id);
 	        	$scope.projectTasks=Taskbyusersid.query({userId : currentUser._id});
-	        	console.log('izmena selekcije 1');
+	        	
 	        	break;
-	    	case 2:
+	    	case '2':
+	    		console.log('izmena selekcije 2'+ currentUser._id);
 	        	$scope.projectTasks=Tasksbyauthorsid.query({userId: currentUser._id});
-	        	console.log('izmena selekcije 2');
+	        	
 	        	break;
 	    	default:
+	    		console.log('default');
+	    		
         	 
 			}
-		}
+		};
 
 
-        $scope.projectTasks=Taskbyusersid.query({userId : currentUser._id});
+        $scope.projectTasks=Taskbyusersid.query({userId : currentUser._id},function(){
+        	console.log('tassssssssssssssssssssssssssssssssssssskks');
+        	for(var i=0;i< $scope.projectTasks.length;i++){
+        		console.log($scope.projectTasks[i]._id);
+        	}
+        });
 
+        /*
 	    relatedTasks=Tasksbyprojectid.query({projectId: currentUser.relatedProject},function(){
 
 
@@ -95,20 +107,20 @@ angular.module('users-page').controller('DashboardController', ['$scope','$timeo
 				}
 			});
 
-
+	*/
 
 
 	   $scope.removeTask=function(taskParam){
 
 
-	   		//console.log(taskIdParam + 'parametar za brisanje');
-	   	var removedTask=TaskOp.delete({taskId: taskParam.id},function(response){
+	   		console.log(taskParam._id + 'parametar za brisanje');
+	   	var removedTask=TaskOp.delete({ taskId: taskParam._id},function(response){
 	   		var index=0;
 	   		try{
 	   			for(var i=0;i<$scope.projectTasks.length;i++){
 	   				index=i;
 	   				console.log($scope.projectTasks[i].id + ' id project tasks');
-	   				if($scope.projectTasks[i].id === removedTask._id)
+	   				if($scope.projectTasks[i]._id === removedTask._id)
 	   				{
 	   					console.log('Obrisao obrisao obrisao');
 	   					var tempArray=[];
@@ -178,8 +190,8 @@ angular.module('users-page').controller('DashboardController', ['$scope','$timeo
 
 
 	   	$scope.potvrda=function(){
-
-	   		var changedTask=TaskOp.update({_id: currentTask.id,
+	   		console.log(currentTask._id + 'taaaaaask iiddddd');
+	   		var changedTask=TaskOp.update({taskId: currentTask._id,
 	   										status: $scope.taskP.status},function(){
 	   											$scope.errorMessage='Task uspedno izmenjen.';
 

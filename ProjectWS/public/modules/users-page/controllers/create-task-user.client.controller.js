@@ -43,14 +43,18 @@ var currentUser=Authentication.user;
 		     
 
 		     if(parsedValues[0] !== 'd'){
-
+		     	console.log('nije ddddddddddddddddddddd');
 		     	$scope.task.createdForUser=parsedValues[0];
 
 		     }
 
 		     $scope.task.priority=selectedPriority;
 		     $scope.task.kreiraoName=currentUser.displayName;
+
+		     if(parsedValues[1] !== 'd'){
 		     $scope.task.kreiranoZaName=parsedValues[1];
+		 	 }
+		 	 
 		     $scope.task.createdByUser=currentUser._id;
 
 		     $scope.task.taskForProject=currentUser.relatedProject;

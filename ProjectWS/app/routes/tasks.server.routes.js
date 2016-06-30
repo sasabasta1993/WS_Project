@@ -14,14 +14,18 @@ module.exports = function(app) {
 		.put(task.update)
 		.delete(task.delete);
 
-		app.route('/task/:userId')
-        .get(task.searchTaskByUserId);
-
-		app.route('/task/:projectId')
+		app.route('/task/project/:projectId')
         .get(task.searchByProject);
 
-        app.route('/taskAuthorId/:userId')
+		app.route('/task/user/:userId')
+        .get(task.searchTaskByUserId);
+
+		app.route('/taskAuthorId/user/:userId')
         .get(task.searchTaskByAuthorId);
+
+
+
+
 
 
 		app.param('taskId', task.taskByID);

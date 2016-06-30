@@ -36,6 +36,7 @@ angular.module('task').controller('ViewTasksController', ['$scope','$timeout','A
 	    relatedTasks=Tasksbyprojectid.query({projectId: currentUser.relatedProject},function(){
 
 
+				console.log('zavrseno dovlacenje zadataka');
 				
 				for(var i=0;i<relatedTasks.length;i++){
 					
@@ -151,7 +152,7 @@ angular.module('task').controller('ViewTasksController', ['$scope','$timeout','A
 
 	   	$scope.potvrda=function(){
 
-	   		var changedTask=TaskOp.update({_id: currentTask.id,
+	   		var changedTask=TaskOp.update({taskId: currentTask.id,
 	   										status: $scope.taskP.status},function(){
 	   											$scope.errorMessage='Task uspedno izmenjen.';
 

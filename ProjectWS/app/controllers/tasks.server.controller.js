@@ -59,10 +59,15 @@ exports.update = function(req, res) {
 exports.searchByProject=function(req,res){
 
 if( req.params.projectId){
-        Task.find({taskForProject: req.params.projectId }, function(err, tasks){
-            console.log(req.params.genre);
-            res.json(tasks);
-        });
+        Task.find({taskForProject: req.params.projectId }).exec(function(err, tasks) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(tasks);
+		}
+	});
     }
 
 };
@@ -70,9 +75,14 @@ if( req.params.projectId){
 
 exports.searchTaskByUserId=function(req,res){
 if(req.params.userId){
-	Task.find({createdForUser : req.params.userId},function(err,tasks){
-
-		res.json(tasks);
+	Task.find({createdForUser : req.params.userId}).exec(function(err, tasks) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(tasks);
+		}
 	});
 }
 };
@@ -80,9 +90,14 @@ if(req.params.userId){
 
 exports.searchTaskByAuthorId=function(req,res){
 if(req.params.userId){
-	Task.find({createdByUser : req.params.userId},function(err,tasks){
-
-		res.json(tasks);
+	Task.find({createdByUser : req.params.userId}).exec(function(err, tasks) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(tasks);
+		}
 	});
 }
 };
